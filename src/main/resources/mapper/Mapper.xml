@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+
+
+    <!--  Spring container가 시작될 때 최초로 실행되는 영역  -->
+
+    <!--  DB관련된 Bean 객체를 등록하는 방법 -->
+    <!--  1. JDBC 연결을 위한 DataSource 클래스 생성 필요 -> BasicDataSource -->
+    <!--  2. Mybatis에서 사용하는 SqlSessionFactory 클래스가 필요하다 -> SqlSessionFactoryBean -->
+    <!--  3. Mybatis에서 사용하는 SqlSessionTemplate 클래스 생성 필요 -> SqlSessionTemplate == Session -->
+    <!--  DB의 Session -> DB Connction(연결 정보 + 소켓 = 통신 통로) -->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/spring1"/>
+        <property name="username" value="root" />
+        <property name="password" value="1234" />
+    </bean>
+
+    <!-- 자바 코드 번역
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/spring1");
+        dataSource.setUsername("user");
+        dataSource.setPassword("1212");
+     -->
+
+    <!-- ref : 미리 선언된 bean을 인자로 처리하는 방법 (주소를 이용해서 처리) -->
+    <!--  resources 경로 설정하는 키워드(중요) -->
+    <!--  'classpath:' : 하나의 파일로만 지정하는 방법 -->
+    <!--  'classpath*:' : 복수의 파일로만 지정하는 방법 -->
+    <!--  ** :  중간 경로로 사용 될 경우, 하위에 있는 모든 경로를 탐색하는 키워드  -->
+    <!--  * : 파일 이름으로 사용 될 경우 모든 파일이름으로 불러올 수있다.  -->
+    <!--  mapper 파일은 실제 멤버 회원가입,추가,삭제 조회,한건 조회 등 실질적인 sql문을 가지고 있는 파일
+                           게시글, 관리자
+     -->
+    <bean id ="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref = "dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+    </bean>
+
+
+    <!--  데이터베이스와 관련된 패키지를 사용을 해야되는데 빨간색이뜬다.
+     데이터베이스의 기본적인 jar , Maven에 없어서 빨간 줄이 뜬다.!
+     메이븐이용해서 라이브러리 포함하기!
+     -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactoryBean" />
+    </bean>
+
+
+    <!--  자바 코드로
+        SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactoryBean)
+     -->
+</beans>

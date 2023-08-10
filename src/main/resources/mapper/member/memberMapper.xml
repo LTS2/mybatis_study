@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- xml파일이 여러가지 설정을 할 수 있다. 마이바티스를 할 수도 있고 bean 생성을 할 수도 있고 패키지에 관한 내용이나 필터(한글깨짐)-->
+<!-- 실질적으로 sql이 들어가는 Mapper 파일 -->
+
+
+<!-- 추가하기
+	취미 처리를 해야되는데
+	java : 배열, ["축구","골프","야구"]으로 처리를 하는데
+	DB : 문자열, "축구,골프,야구"
+(insert 태그를 이용해서 실제 명령문들을 작성한다.)-->
+<insert id="insertMember" parameterType="com.wj.mybatis_boot.model.dto.Member">
+    INSERT INTO MEMBER VALUES(#{id}, #{password}, #{name}, #{age}, #{gender}, #{phone}, #{address}, #{email}, #{hobby})
+</insert>

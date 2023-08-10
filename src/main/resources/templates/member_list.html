@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>회원 목록</title>
 </head>
 <body>
-$END$
+<table class="table">
+  <tr>
+    <th scope="col">아이디</th>
+    <th scope="col">비밀번호</th>
+    <th scope="col">이름</th>
+    <th scope="col">나이</th>
+    <th scope="col">성별</th>
+    <th scope="col">전화번호</th>
+    <th scope="col">주소</th>
+    <th scope="col">이메일</th>
+    <th scope="col">취미</th>
+    <th scope="col">가입일</th>
+  </tr>
+  <tr th:each="member : ${list}">
+    <td th:text="${member.id}"></td>
+    <td th:text="${member.password}"></td>
+    <td th:text="${member.name}"></td>
+    <td th:text="${member.age}"></td>
+    <td th:text="${member.gender}"></td>
+    <td th:text="${member.phone}"></td>
+    <td th:text="${member.address}"></td>
+    <td th:text="${member.email}"></td>
+    <td>
+      <span th:each="item : ${member.hobby}" th:text="${item}"></span>
+    </td>
+    <td th:text="${member.enrollDate}"></td>
+  </tr>
+</table>
 </body>
 </html>

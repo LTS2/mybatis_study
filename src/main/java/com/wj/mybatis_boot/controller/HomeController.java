@@ -1,6 +1,6 @@
 package com.wj.mybatis_boot.controller;
 
-import com.wj.mybatis_boot.model.Member;
+import com.wj.mybatis_boot.model.dto.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
